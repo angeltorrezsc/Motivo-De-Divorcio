@@ -1,10 +1,9 @@
 
 name: MDD
-name: MDD
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ master ]
 
 permissions:
   contents: write
