@@ -1,4 +1,4 @@
-import Ajv, { ValidateFunction } from 'ajv';
+import Ajv, { ValidateFunction, ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 import productosSchema from '../data/schemas/productos.schema.json';
 import peliculasSchema from '../data/schemas/peliculas.schema.json';
@@ -15,7 +15,7 @@ const validators: Record<string, ValidateFunction> = {
   'servicios.json': ajv.compile(serviciosSchema as any),
 };
 
-function formatAjvErrors(errors: Ajv.ErrorObject[] | null | undefined) {
+function formatAjvErrors(errors: ErrorObject[] | null | undefined) {
   if (!errors || errors.length === 0) return 'Unknown validation error';
   return errors
     .map((e) => {

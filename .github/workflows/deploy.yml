@@ -2,7 +2,7 @@ name: MDD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
 
 permissions:
   contents: write
@@ -27,8 +27,8 @@ jobs:
       - name: Validate data JSON
         run: npm run validate:data
 
-      - name: Build static site
-        run: npm run build
+      - name: Build and export static site
+        run: npm run export
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
