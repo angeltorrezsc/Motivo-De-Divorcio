@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/Motivo-De-Divorcio',
   output: 'export',
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
-  trailingSlash: true
 };
 
 module.exports = nextConfig;

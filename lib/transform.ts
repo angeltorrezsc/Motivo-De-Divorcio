@@ -1,6 +1,7 @@
 
 // lib/transform.ts
-import type { Movie, Product, CalendarWeek, Service } from './types';
+import type { Movie, Product, CalendarWeekData, Service, CalendarEvent } from './types';
+import { isWeekActive } from './calendar';
 
 /**
  * Convierte un objeto "crudo" (por ejemplo desde data/*.json o DB) que
@@ -32,12 +33,25 @@ export function mapRawProductToProduct(raw: any): Product {
   };
 }
 
-export function mapRawToCalendarWeek(raw: any): CalendarWeek {
+export function mapRawToCalendarWeek(raw: any): CalendarWeekData {
+  const startDate = raw.weekStart ?? raw.inicio ?? '';
+  const endDate = raw.weekEnd ?? raw.fin ?? '';
+  
+  const events: CalendarEvent[] = [];
+  if (raw.titulo && raw.slug) {
+    events.push({
+      date: startDate, // Assumption: event happens on first day of week if not specified
+      title: raw.titulo,
+      type: 'movie', // Assumption: everything in this calendar is a movie.
+      slug: raw.slug,
+    });
+  }
+
   return {
-    title: raw.title ?? raw.titulo ?? '',
-    weekStart: raw.weekStart ?? raw.inicio ?? '',
-    weekEnd: raw.weekEnd ?? raw.fin ?? '',
-    link: raw.link ?? raw.enlace ?? undefined,
+    startDate,
+    endDate,
+    events,
+    isActive: isWeekActive(startDate, endDate),
   };
 }
 

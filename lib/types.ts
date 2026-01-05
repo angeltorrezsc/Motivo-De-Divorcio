@@ -1,35 +1,46 @@
-// lib/types.ts
-export type Availability = 'disponible' | 'pendiente' | 'agotado';
-
-export interface BaseItem {
+export interface Product {
   id: string;
   slug: string;
   title: string;
+  description: string;
   image?: string;
-  status?: Availability;
-  description?: string;
-}
-
-export interface Movie extends BaseItem {
-  duration?: string;
-  year?: number;
-}
-
-export interface Product extends BaseItem {
-  price?: number;
-  stock?: number;
+  price?: string;
   category?: string;
+  status?: string;
+  stock?: number;
 }
 
-export interface CalendarWeek {
+export interface Movie {
+  id: string;
+  slug: string;
   title: string;
-  weekStart: string;
-  weekEnd: string;
-  link?: string;
+  description: string;
+  image?: string;
+  releaseDate?: string;
+  director?: string;
+  status?: string;
 }
 
-export interface Service extends BaseItem {
-  price?: string | number;
+export interface Service {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  price?: string;
+  status?: string;
+  image?: string;
 }
 
-export type ICalendarWeek = CalendarWeek;
+export interface CalendarEvent {
+  date: string;
+  title: string;
+  type: 'movie' | 'product' | 'other';
+  slug?: string;
+}
+
+export interface CalendarWeekData {
+  startDate: string;
+  endDate: string;
+  events: CalendarEvent[];
+  isActive: boolean;
+}

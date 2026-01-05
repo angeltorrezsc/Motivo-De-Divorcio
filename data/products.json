@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "producto-1",
+    "title": "Camiseta MDD",
+    "description": "Camiseta de algodón de alta calidad con el logo de MDD.",
+    "image": "https://via.placeholder.com/400x300?text=Camiseta",
+    "price": "150 BOB",
+    "category": "Ropa"
+  },
+  {
+    "slug": "producto-2",
+    "title": "Taza Coleccionable",
+    "description": "Taza de cerámica con diseños exclusivos de películas.",
+    "image": "https://via.placeholder.com/400x300?text=Taza",
+    "price": "50 BOB",
+    "category": "Accesorios"
+  }
+]

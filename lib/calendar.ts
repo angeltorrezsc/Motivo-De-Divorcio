@@ -1,45 +1,21 @@
-import { ICalendarWeek } from "./types";
+/**
+ * Comprueba si una fecha (YYYY-MM-DD) está dentro del rango [start, end].
+ */
+export const isDateInWeek = (start: string, end: string, date: string): boolean => {
+  return date >= start && date <= end;
+};
 
-export function toZoneDateString(timeZone = 'America/La_Paz') {
-  // Get current date/time in target timezone, as ISO YYYY-MM-DD
-  const locale = new Date().toLocaleString('en-CA', { timeZone });
-  const d = new Date(locale);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-export function isWeekActive(weekStartIso: string, weekEndIso: string, timeZone = 'America/La_Paz') {
-  const todayIso = toZoneDateString(timeZone);
-  return isDateInWeek(weekStartIso, weekEndIso, todayIso);
-}
-
-export function parseISO(dateIso: string) {
-  return new Date(dateIso + 'T00:00:00Z');
-}
-
-export function isDateInWeek(weekStartIso: string, weekEndIso: string, dateIso: string) {
-  return dateIso >= weekStartIso && dateIso <= weekEndIso;
-}
-
-export function isCurrentWeek(week: ICalendarWeek, currentDate: Date): boolean {
-  const weekStart = new Date(week.weekStart);
-  const weekEnd = new Date(week.weekEnd);
-  weekEnd.setHours(23, 59, 59, 999); // Set to end of day
-
-  return currentDate >= weekStart && currentDate <= weekEnd;
-}
-
-export function getWeekRange(date: Date): { weekStart: string; weekEnd: string } {
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is sunday
-  const weekStart = new Date(date.setDate(diff));
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekStart.getDate() + 6);
-
-  return {
-    weekStart: weekStart.toISOString().split('T')[0],
-    weekEnd: weekEnd.toISOString().split('T')[0],
-  };
-}
+/**
+ * Comprueba si la fecha actual (en la zona horaria dada) está dentro del rango [start, end].
+ */
+export const isWeekActive = (start: string, end: string, timezone: string = 'America/La_Paz'): boolean => {
+  try {
+    const now = new Date();
+    // Formato YYYY-MM-DD en la zona horaria especificada
+    const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit' });
+    const today = formatter.format(now);
+    return today >= start && today <= end;
+  } catch (e) {
+    return false;
+  }
+};

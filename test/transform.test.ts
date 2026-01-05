@@ -32,16 +32,20 @@ describe('transform utils', () => {
     expect(product.image).toBe('/img/laptop.jpg'); // Debe tomar la primera imagen
   });
 
-  it('maps raw calendar week correctly', () => {
+  it('maps raw calendar week to calendar week data', () => {
     const raw = {
       titulo: 'Semana de Terror',
-      inicio: '2023-10-25',
-      fin: '2023-10-31',
-      enlace: 'https://example.com'
+      weekStart: '2023-10-25',
+      weekEnd: '2023-10-31',
+      slug: 'semana-de-terror',
     };
-    const week = mapRawToCalendarWeek(raw);
-    expect(week.title).toBe('Semana de Terror');
-    expect(week.weekStart).toBe('2023-10-25');
-    expect(week.link).toBe('https://example.com');
+    const weekData = mapRawToCalendarWeek(raw);
+    expect(weekData.startDate).toBe('2023-10-25');
+    expect(weekData.endDate).toBe('2023-10-31');
+    expect(weekData.isActive).toBe(false); // Assuming '2023-10-25' is not the current date
+    expect(weekData.events).toHaveLength(1);
+    expect(weekData.events[0].title).toBe('Semana de Terror');
+    expect(weekData.events[0].slug).toBe('semana-de-terror');
+    expect(weekData.events[0].type).toBe('movie');
   });
 });

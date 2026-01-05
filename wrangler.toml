@@ -1,0 +1,9 @@
+name = "motivo-catalog-api"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Bindings
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "motivo-data" # Replace with your actual bucket name or use env var via wrangler
+preview_bucket_name = "motivo-data-preview"

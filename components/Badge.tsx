@@ -1,5 +1,4 @@
 import React from 'react';
-import { Availability } from '../lib/types';
 
 const styles: Record<string, React.CSSProperties> = {
   disponible: { backgroundColor: '#d4edda', color: '#155724', border: '1px solid #c3e6cb' },

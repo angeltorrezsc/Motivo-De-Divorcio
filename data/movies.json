@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "pelicula-1",
+    "title": "El Gran Estreno",
+    "description": "Una película llena de acción y aventura que no te puedes perder.",
+    "image": "https://via.placeholder.com/400x600?text=Pelicula+1",
+    "releaseDate": "2024-05-15",
+    "director": "Juan Perez"
+  },
+  {
+    "slug": "pelicula-2",
+    "title": "Drama en la Ciudad",
+    "description": "Una historia conmovedora sobre la vida urbana.",
+    "image": "https://via.placeholder.com/400x600?text=Pelicula+2",
+    "releaseDate": "2024-06-01",
+    "director": "Maria Lopez"
+  }
+]

@@ -1,18 +1,25 @@
-import '../styles/globals.css';
-import React from 'react';
-import Layout from '../components/Layout';
+import './globals.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'MDD',
+  title: 'Catálogo Estático',
+  description: 'Catálogo de productos y películas',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="es">
-      <body style={{ margin: 0 }}>
-        <Layout>
+      <body className="min-h-screen flex flex-col text-gray-900 bg-white">
+        <Header />
+        <main className="flex-grow">
           {children}
-        </Layout>
+        </main>
+        <Footer />
       </body>
     </html>
   );

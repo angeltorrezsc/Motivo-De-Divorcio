@@ -1,0 +1,33 @@
+[
+  {
+    "startDate": "2024-05-13",
+    "endDate": "2024-05-19",
+    "isActive": true,
+    "events": [
+      {
+        "date": "2024-05-15",
+        "title": "Estreno: El Gran Estreno",
+        "type": "movie",
+        "slug": "pelicula-1"
+      },
+      {
+        "date": "2024-05-17",
+        "title": "Descuento en Camisetas",
+        "type": "product",
+        "slug": "producto-1"
+      }
+    ]
+  },
+  {
+    "startDate": "2024-05-20",
+    "endDate": "2024-05-26",
+    "isActive": false,
+    "events": [
+      {
+        "date": "2024-05-22",
+        "title": "Charla con Director",
+        "type": "other"
+      }
+    ]
+  }
+]
