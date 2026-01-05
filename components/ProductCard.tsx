@@ -1,19 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
+import Card from './Card';
 import { Product } from '../lib/types';
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="card">
-      <Link href={`/productos/${product.slug}`}>
-        <>
-          <img src={product.imagenes?.[0] || '/img/placeholder.png'} alt={product.nombre} style={{width:200,height:120,objectFit:'cover'}}/>
-          <h3>{product.nombre}</h3>
-        </>
-      </Link>
-      <p>{product.precio}</p>
-      <p>{product.estado}</p>
-    </article>
+    <Link href={`/productos/${product.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Card
+        title={product.title}
+        image={product.image || '/img/placeholder.png'}
+        status={product.status}
+        className="card"
+      >
+        {product.price && <p>Precio: {product.price}</p>}
+      </Card>
+    </Link>
   );
 }
-

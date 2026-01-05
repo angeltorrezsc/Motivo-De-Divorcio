@@ -1,24 +1,20 @@
 import React from 'react';
-import movies from '../../data/peliculas.json';
-import MovieCard from '../../components/MovieCard';
+import rawMovies from '../../data/peliculas.json';
+import MovieSearch from '../../components/MovieSearch';
+import { mapRawMovies } from '../../lib/transform';
 import { validateData, shouldValidateAtRuntime } from '../../lib/validate';
+import { siteConfig } from '../../lib/config';
 
-if (shouldValidateAtRuntime()) validateData('peliculas.json', movies, { throwOnError: true });
+if (shouldValidateAtRuntime()) validateData('peliculas.json', rawMovies, { throwOnError: true });
 
 export default function PeliculasPage() {
-  const disponibles = movies.filter((m:any) => m.estado === 'disponible');
-  const pendientes = movies.filter((m:any) => m.estado !== 'disponible');
+  const movies = mapRawMovies(rawMovies);
+  const PHONE = siteConfig.phone;
+
   return (
     <section>
       <h1>Películas</h1>
-      <h2>Disponibles</h2>
-      <div style={{display:'flex',flexWrap:'wrap'}}>
-        {disponibles.map((m:any)=> <div key={m.id} style={{width:220}}><MovieCard movie={m} /></div>)}
-      </div>
-      <h2>Pendientes</h2>
-      <div style={{display:'flex',flexWrap:'wrap'}}>
-        {pendientes.map((m:any)=> <div key={m.id} style={{width:220}}><MovieCard movie={m} /></div>)}
-      </div>
+      <MovieSearch movies={movies} phone={PHONE} />
     </section>
   );
 }

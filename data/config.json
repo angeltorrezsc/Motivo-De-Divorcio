@@ -1,0 +1,10 @@
+{
+  "siteName": "MDD",
+  "phoneNumber": "59171234567",
+  "social": {
+    "facebook": "https://facebook.com",
+    "instagram": "https://instagram.com",
+    "tiktok": "https://tiktok.com"
+  },
+  "location": "https://maps.google.com"
+}

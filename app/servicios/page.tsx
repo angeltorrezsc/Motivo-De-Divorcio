@@ -1,30 +1,38 @@
 import React from 'react';
-import services from '../../data/servicios.json';
+import rawServices from '../../data/servicios.json';
 import WhatsAppButton from '../../components/WhatsAppButton';
-import { buildMovieMessage } from '../../lib/whatsapp';
+import Card from '../../components/Card';
+import Grid from '../../components/Grid';
+import { buildServiceMessage } from '../../lib/whatsapp';
+import { mapRawServices } from '../../lib/transform';
 import { validateData, shouldValidateAtRuntime } from '../../lib/validate';
+import { siteConfig } from '../../lib/config';
 
-
-
-
-if (shouldValidateAtRuntime()) validateData('servicios.json', services, { throwOnError: true });
+if (shouldValidateAtRuntime()) validateData('servicios.json', rawServices, { throwOnError: true });
 
 export default function ServiciosPage() {
-  const PHONE_NUMBER = process.env.PHONE_NUMBER || '59171234567';
+  const services = mapRawServices(rawServices);
+  const PHONE_NUMBER = siteConfig.phone;
+
   return (
     <section>
       <h1>Servicios</h1>
-      <div>
-        {services.map((s:any)=> (
-          <div key={s.id} style={{border:'1px solid #eee',padding:8,margin:6}}>
-            <h3>{s.titulo}</h3>
-            <p>{s.descripcion}</p>
-            <p>{s.precio_base}</p>
-            <WhatsAppButton phone={PHONE} messageBuilder={() => buildMovieMessage(movie)} />
-
-          </div>
+      <Grid>
+        {services.map((s) => (
+          <Card key={s.id} title={s.title} image={s.image} status={s.status}>
+            <p>{s.description}</p>
+            {s.price && <p><strong>{s.price}</strong></p>}
+            <div style={{ marginTop: '1rem' }}>
+              <WhatsAppButton 
+                phone={PHONE_NUMBER} 
+                messageBuilder={() => buildServiceMessage(s)}
+              >
+                Consultar
+              </WhatsAppButton>
+            </div>
+          </Card>
         ))}
-      </div>
+      </Grid>
     </section>
   );
 }

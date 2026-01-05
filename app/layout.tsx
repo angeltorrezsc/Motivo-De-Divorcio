@@ -1,7 +1,6 @@
 import '../styles/globals.css';
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Layout from '../components/Layout';
 
 export const metadata = {
   title: 'MDD',
@@ -10,12 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>
-        <Header />
-        <main style={{padding:16}}>{children}</main>
-        <Footer />
+      <body style={{ margin: 0 }}>
+        <Layout>
+          {children}
+        </Layout>
       </body>
     </html>
   );
 }
-

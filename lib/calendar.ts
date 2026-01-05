@@ -1,3 +1,5 @@
+import { ICalendarWeek } from "./types";
+
 export function toZoneDateString(timeZone = 'America/La_Paz') {
   // Get current date/time in target timezone, as ISO YYYY-MM-DD
   const locale = new Date().toLocaleString('en-CA', { timeZone });
@@ -20,7 +22,6 @@ export function parseISO(dateIso: string) {
 export function isDateInWeek(weekStartIso: string, weekEndIso: string, dateIso: string) {
   return dateIso >= weekStartIso && dateIso <= weekEndIso;
 }
-import { ICalendarWeek } from "./types";
 
 export function isCurrentWeek(week: ICalendarWeek, currentDate: Date): boolean {
   const weekStart = new Date(week.weekStart);

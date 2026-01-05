@@ -1,19 +1,17 @@
 import React from 'react';
-import products from '../../data/productos.json';
-import ProductCard from '../../components/ProductCard';
+import rawProducts from '../../data/productos.json';
+import ProductSearch from '../../components/ProductSearch';
+import { mapRawProducts } from '../../lib/transform';
 import { validateData, shouldValidateAtRuntime } from '../../lib/validate';
 
-if (shouldValidateAtRuntime()) validateData('productos.json', products, { throwOnError: true });
+if (shouldValidateAtRuntime()) validateData('productos.json', rawProducts, { throwOnError: true });
 
 export default function ProductosPage() {
+  const products = mapRawProducts(rawProducts);
   return (
     <section>
       <h1>Productos</h1>
-      <div style={{display:'flex',flexWrap:'wrap'}}>
-        {products.map((p:any)=> (
-          <div key={p.id} style={{width:220}}><ProductCard product={p} /></div>
-        ))}
-      </div>
+      <ProductSearch products={products} />
     </section>
   );
 }

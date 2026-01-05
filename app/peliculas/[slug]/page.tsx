@@ -1,29 +1,67 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import movies from '../../../data/peliculas.json';
+import rawMovies from '../../../data/peliculas.json';
 import WhatsAppButton from '../../../components/WhatsAppButton';
+import Badge from '../../../components/Badge';
+import Breadcrumbs from '../../../components/Breadcrumbs';
 import { buildMovieMessage } from '../../../lib/whatsapp';
-import peliculas from '../../../data/peliculas.json';
+import { mapRawMovieToMovie } from '../../../lib/transform';
+import { siteConfig } from '../../../lib/config';
 
 export function generateStaticParams() {
-  return peliculas.map((pelicula) => ({
-    slug: pelicula.slug
-  }))
+  return (rawMovies as any[]).map((m) => ({
+    slug: m.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const mRaw = (rawMovies as any[]).find((x) => x.slug === params.slug);
+  if (!mRaw) return { title: 'Película no encontrada' };
+  
+  const movie = mapRawMovieToMovie(mRaw);
+  return {
+    title: `${movie.title} | MDD Películas`,
+    description: movie.description || `Detalles de la película ${movie.title}`,
+  };
 }
 
 export default function MovieDetail({ params }: { params: { slug: string } }) {
-  const m: any = movies.find((x:any) => x.slug === params.slug);
-  if (!m) return notFound();
-  const PHONE_NUMBER = process.env.PHONE_NUMBER || '59171234567';
-  const message = buildMovieMessage({ id: m.id, titulo: m.titulo, estado: m.estado });
+  const mRaw = (rawMovies as any[]).find((x) => x.slug === params.slug);
+  if (!mRaw) return notFound();
+
+  const movie = mapRawMovieToMovie(mRaw);
+  const PHONE_NUMBER = siteConfig.phone;
+
   return (
-    <article>
-      <h1>{m.titulo}</h1>
-      <img src={m.imagen || '/img/placeholder.png'} alt={m.titulo} style={{width:320,height:200,objectFit:'cover'}} />
-      <p>{m.resumen}</p>
-      <p>{m.nota}</p>
-      <p>Estado: {m.estado}</p>
-      <WhatsAppButton phone={PHONE_NUMBER} message={message} label="Consultar por WhatsApp" />
+    <article style={{ maxWidth: 800, margin: '0 auto' }}>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Películas', href: '/peliculas' },
+        { label: movie.title }
+      ]} />
+      <h1>{movie.title}</h1>
+      <img
+        src={movie.image || '/img/placeholder.png'}
+        alt={movie.title}
+        style={{ width: '100%', maxWidth: 600, height: 'auto', borderRadius: 8, marginBottom: '1rem' }}
+      />
+      
+      <div style={{ marginBottom: '1.5rem' }}>
+        <Badge status={movie.status || 'pendiente'} />
+      </div>
+
+      <p style={{ lineHeight: 1.6, fontSize: '1.1rem' }}>{movie.description}</p>
+      
+      <div style={{ marginTop: '2rem' }}>
+        <WhatsAppButton 
+          phone={PHONE_NUMBER} 
+          messageBuilder={() => buildMovieMessage(movie)}
+          className="btn-whatsapp"
+        >
+          Consultar por WhatsApp
+        </WhatsAppButton>
+      </div>
     </article>
   );
 }

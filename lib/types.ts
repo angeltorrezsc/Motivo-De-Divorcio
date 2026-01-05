@@ -3,6 +3,7 @@ export type Availability = 'disponible' | 'pendiente' | 'agotado';
 
 export interface BaseItem {
   id: string;
+  slug: string;
   title: string;
   image?: string;
   status?: Availability;
@@ -17,4 +18,18 @@ export interface Movie extends BaseItem {
 export interface Product extends BaseItem {
   price?: number;
   stock?: number;
+  category?: string;
 }
+
+export interface CalendarWeek {
+  title: string;
+  weekStart: string;
+  weekEnd: string;
+  link?: string;
+}
+
+export interface Service extends BaseItem {
+  price?: string | number;
+}
+
+export type ICalendarWeek = CalendarWeek;
